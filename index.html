@@ -1,31 +1,244 @@
-body {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>x6iny</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #1a0023, #000);
-  color: white;
-  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+body {
   height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  color: white;
+}
+
+/* REAL SPACE LAYERS */
+.space {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, rgba(140,0,255,0.25), transparent 40%),
+              radial-gradient(circle at 80% 30%, rgba(0,140,255,0.18), transparent 45%),
+              radial-gradient(circle at 50% 80%, rgba(180,0,255,0.12), transparent 50%),
+              #000;
+  z-index: 0;
+  animation: drift 18s infinite alternate ease-in-out;
+}
+
+@keyframes drift {
+  0% { transform: scale(1) translateY(0px); }
+  100% { transform: scale(1.1) translateY(-20px); }
+}
+
+/* STAR LAYER */
+.stars::before,
+.stars::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.15;
+  animation: starMove 60s linear infinite;
+}
+
+.stars::after {
+  opacity: 0.08;
+  background-size: 80px 80px;
+  animation-duration: 120s;
+}
+
+@keyframes starMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+/* PARTICLES */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(170,120,255,0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(140,0,255,0.8);
+  animation: floatUp linear infinite;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* CARD */
+.card {
+  position: relative;
+  z-index: 3;
+  width: 360px;
+  padding: 25px;
+  border-radius: 22px;
+  background: rgba(10, 5, 20, 0.65);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(140, 0, 255, 0.25);
+  box-shadow: 0 0 60px rgba(140,0,255,0.25);
   text-align: center;
 }
 
-.avatar {
-  width: 120px;
-  height: 120px;
+/* PFP FIX (BLUE + PURPLE GLOW) */
+.pfp {
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
-  border: 3px solid rgba(160, 90, 255, 0.8);
-  box-shadow: 0 0 25px rgba(160, 90, 255, 0.8);
+  margin: auto;
+  background: url('https://i.imgur.com/8Km9tLL.png') center/cover;
+  border: 2px solid rgba(180, 120, 255, 0.6);
+  box-shadow:
+    0 0 25px rgba(140,0,255,0.6),
+    0 0 45px rgba(0,160,255,0.35);
+  filter: saturate(1.2) contrast(1.1);
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
+h1 {
+  margin-top: 12px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 15px rgba(140,0,255,0.6),
+    0 0 25px rgba(0,140,255,0.4);
 }
+
+.tag {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.typing {
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.85;
+  color: #caa6ff;
+  min-height: 18px;
+}
+
+/* LINKS */
+.links {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(140,0,255,0.18);
+  transition: 0.2s;
+  font-size: 13px;
+}
+
+a:hover {
+  transform: scale(1.05);
+  background: rgba(140,0,255,0.25);
+  box-shadow:
+    0 0 20px rgba(140,0,255,0.4),
+    0 0 25px rgba(0,140,255,0.2);
+}
+
+.music {
+  margin-top: 12px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="space"></div>
+<div class="stars"></div>
+
+<div class="card">
+  <div class="pfp"></div>
+
+  <h1>x6iny</h1>
+  <div class="tag">17 • drifting through static</div>
+
+  <div class="typing" id="typing"></div>
+
+  <div class="links">
+    <a href="#">Instagram</a>
+    <a href="#">Spotify</a>
+    <a href="#">Discord</a>
+  </div>
+
+  <div class="music">♪ BOA - Duvet</div>
+</div>
+
+<script>
+/* typing */
+const texts = [
+  "quiet mind, loud thoughts.",
+  "lost in space.",
+  "everything feels distant.",
+  "floating through noise."
+];
+
+let i=0,j=0,deleting=false;
+
+function type(){
+  const el=document.getElementById("typing");
+  const t=texts[i];
+
+  if(!deleting){
+    el.innerText=t.substring(0,++j);
+  } else {
+    el.innerText=t.substring(0,--j);
+  }
+
+  if(!deleting && j===t.length){
+    deleting=true;
+    setTimeout(type,1200);
+    return;
+  }
+
+  if(deleting && j===0){
+    deleting=false;
+    i=(i+1)%texts.length;
+  }
+
+  setTimeout(type,deleting?40:70);
+}
+type();
+
+/* particles */
+for(let i=0;i<40;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(5+Math.random()*10)+"s";
+  p.style.opacity=Math.random();
+  document.body.appendChild(p);
+}
+</script>
+
+</body>
+</html>
