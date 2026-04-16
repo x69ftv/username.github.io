@@ -2,212 +2,241 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>x6iny</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 body {
   height: 100vh;
+  overflow: hidden;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(270deg, #0a0a0a, #111, #1a1a1a);
-  background-size: 600% 600%;
-  animation: bgMove 14s ease infinite;
+  align-items: center;
+  background: #000;
   color: white;
 }
 
-@keyframes bgMove {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+/* REAL SPACE LAYERS */
+.space {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, rgba(140,0,255,0.25), transparent 40%),
+              radial-gradient(circle at 80% 30%, rgba(0,140,255,0.18), transparent 45%),
+              radial-gradient(circle at 50% 80%, rgba(180,0,255,0.12), transparent 50%),
+              #000;
+  z-index: 0;
+  animation: drift 18s infinite alternate ease-in-out;
 }
 
-.card {
-  width: 420px;
-  padding: 38px;
-  border-radius: 24px;
-  text-align: center;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(25px);
-
-  box-shadow: 0 0 60px rgba(0,0,0,0.6);
-  transition: 0.3s;
+@keyframes drift {
+  0% { transform: scale(1) translateY(0px); }
+  100% { transform: scale(1.1) translateY(-20px); }
 }
 
-.card:hover {
-  transform: scale(1.02);
+/* STAR LAYER */
+.stars::before,
+.stars::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.15;
+  animation: starMove 60s linear infinite;
 }
 
-.pfp {
-  width: 105px;
-  height: 105px;
+.stars::after {
+  opacity: 0.08;
+  background-size: 80px 80px;
+  animation-duration: 120s;
+}
+
+@keyframes starMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+/* PARTICLES */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(170,120,255,0.8);
   border-radius: 50%;
-  margin-bottom: 12px;
-  border: 2px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 10px rgba(140,0,255,0.8);
+  animation: floatUp linear infinite;
+  z-index: 1;
 }
 
-.username {
-  font-size: 26px;
-  font-weight: 700;
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
 }
 
-.bio {
+/* CARD */
+.card {
+  position: relative;
+  z-index: 3;
+  width: 360px;
+  padding: 25px;
+  border-radius: 22px;
+  background: rgba(10, 5, 20, 0.65);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(140, 0, 255, 0.25);
+  box-shadow: 0 0 60px rgba(140,0,255,0.25);
+  text-align: center;
+}
+
+/* PFP FIX (BLUE + PURPLE GLOW) */
+.pfp {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  margin: auto;
+  background: url('https://i.imgur.com/8Km9tLL.png') center/cover;
+  border: 2px solid rgba(180, 120, 255, 0.6);
+  box-shadow:
+    0 0 25px rgba(140,0,255,0.6),
+    0 0 45px rgba(0,160,255,0.35);
+  filter: saturate(1.2) contrast(1.1);
+}
+
+h1 {
+  margin-top: 12px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 15px rgba(140,0,255,0.6),
+    0 0 25px rgba(0,140,255,0.4);
+}
+
+.tag {
   font-size: 13px;
-  opacity: 0.6;
-  margin-top: 6px;
-  margin-bottom: 14px;
-}
-
-.info {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.chip {
-  font-size: 11px;
-  padding: 6px 10px;
-  border-radius: 999px;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
   opacity: 0.75;
-  transition: 0.2s;
 }
 
-.chip:hover {
-  opacity: 1;
-  transform: scale(1.05);
+.typing {
+  margin-top: 12px;
+  font-size: 13px;
+  opacity: 0.85;
+  color: #caa6ff;
+  min-height: 18px;
 }
 
-.link {
-  display: block;
-  margin: 8px 0;
-  padding: 11px;
-  border-radius: 12px;
+/* LINKS */
+.links {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
+a {
   text-decoration: none;
   color: white;
-  font-size: 13px;
-
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: 0.25s;
-}
-
-.link:hover {
-  background: rgba(255,255,255,0.1);
-  transform: translateY(-2px);
-}
-
-.song {
-  margin-top: 14px;
   padding: 10px;
   border-radius: 12px;
-
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.song-title {
-  font-size: 10px;
-  opacity: 0.5;
-  letter-spacing: 2px;
-}
-
-.song-name {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(140,0,255,0.18);
+  transition: 0.2s;
   font-size: 13px;
-  margin-top: 4px;
-  opacity: 0.85;
 }
 
-.play-btn {
-  margin-top: 10px;
-  padding: 9px 14px;
-  border-radius: 10px;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: white;
-  cursor: pointer;
-  transition: 0.25s;
+a:hover {
+  transform: scale(1.05);
+  background: rgba(140,0,255,0.25);
+  box-shadow:
+    0 0 20px rgba(140,0,255,0.4),
+    0 0 25px rgba(0,140,255,0.2);
 }
 
-.play-btn:hover {
-  background: rgba(255,255,255,0.12);
-}
-
-.footer {
+.music {
   margin-top: 12px;
-  font-size: 11px;
-  opacity: 0.35;
+  font-size: 12px;
+  opacity: 0.7;
 }
 </style>
 </head>
 
 <body>
 
+<div class="space"></div>
+<div class="stars"></div>
+
 <div class="card">
+  <div class="pfp"></div>
 
-  <img class="pfp" src="https://i.imgur.com/yourpfp.png" />
+  <h1>x6iny</h1>
+  <div class="tag">17 • drifting through static</div>
 
-  <div class="username">x6iny</div>
+  <div class="typing" id="typing"></div>
 
-  <div class="bio">
-    “quiet minds move the loudest”
+  <div class="links">
+    <a href="#">Instagram</a>
+    <a href="#">Spotify</a>
+    <a href="#">Discord</a>
   </div>
 
-  <div class="info">
-    <div class="chip">age: 17</div>
-    <div class="chip">status: online</div>
-    <div class="chip">mood: detached</div>
-    <div class="chip">energy: calm</div>
-  </div>
-
-  <!-- LINKS -->
-  <a class="link" href="https://discord.com/users/YOUR_ID" target="_blank">discord</a>
-  <a class="link" href="https://instagram.com/yourusername" target="_blank">instagram</a>
-  <a class="link" href="https://open.spotify.com/user/yourprofile" target="_blank">spotify</a>
-
-  <!-- MUSIC -->
-  <div class="song">
-    <div class="song-title">now playing</div>
-    <div class="song-name">Duvet — Bôa</div>
-
-    <button class="play-btn" onclick="toggleMusic()">play / pause</button>
-    <audio id="music" src="YOUR_DUVET_MP3_LINK.mp3"></audio>
-  </div>
-
-  <div class="footer">aura.bio</div>
-
+  <div class="music">♪ BOA - Duvet</div>
 </div>
 
 <script>
-let playing = false;
-const audio = document.getElementById("music");
+/* typing */
+const texts = [
+  "quiet mind, loud thoughts.",
+  "lost in space.",
+  "everything feels distant.",
+  "floating through noise."
+];
 
-function toggleMusic() {
-  if (!playing) {
-    audio.play();
-    playing = true;
+let i=0,j=0,deleting=false;
+
+function type(){
+  const el=document.getElementById("typing");
+  const t=texts[i];
+
+  if(!deleting){
+    el.innerText=t.substring(0,++j);
   } else {
-    audio.pause();
-    playing = false;
+    el.innerText=t.substring(0,--j);
   }
+
+  if(!deleting && j===t.length){
+    deleting=true;
+    setTimeout(type,1200);
+    return;
+  }
+
+  if(deleting && j===0){
+    deleting=false;
+    i=(i+1)%texts.length;
+  }
+
+  setTimeout(type,deleting?40:70);
+}
+type();
+
+/* particles */
+for(let i=0;i<40;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(5+Math.random()*10)+"s";
+  p.style.opacity=Math.random();
+  document.body.appendChild(p);
 }
 </script>
 
