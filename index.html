@@ -1,27 +1,37 @@
-<div class="music-card">
-  <div class="music-title">Now Playing</div>
-  <div class="music-song">BOA — Duvet</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>x6iny</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  <button class="music-btn" onclick="toggleMusic()">
-    ▶ Play / Pause
-  </button>
+<body>
 
-  <audio id="bgmusic" loop>
-    <source src="YOUR_DIRECT_AUDIO_LINK.mp3" type="audio/mpeg">
-  </audio>
-</div>
+  <div class="card">
+    <img src="https://i.imgur.com/Ac8raRK.jpeg" class="avatar">
+
+    <h1>x6iny</h1>
+    <p class="status">“lost in the glow”</p>
+
+    <button onclick="toggleMusic()" class="music-btn">▶ play music</button>
+
+    <audio id="bgmusic" loop>
+      <source src="YOUR_AUDIO.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
 <script>
 const music = document.getElementById("bgmusic");
-let playing = false;
 
 function toggleMusic() {
-  if (!playing) {
+  if (music.paused) {
     music.play();
-    playing = true;
   } else {
     music.pause();
-    playing = false;
   }
 }
 </script>
+
+</body>
+</html>
